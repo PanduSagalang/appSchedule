@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homefragment"
+        android:title="Home"
+        android:icon="@drawable/berandaicon_foreground"/>
+
+    <item
+        android:id="@+id/tugasfragment"
+        android:title="Tugas"
+        android:icon="@drawable/note"/>
+
+    <item
+        android:id="@+id/profilefragment"
+        android:title="Profile"
+        android:icon="@drawable/profile"/>
+
+
+
+</menu>
