@@ -23,5 +23,5 @@
     android:id="@+id/tambahTugasFragment"
     android:name="com.example.scheduly.TambahTugasFragment"
     android:label="Tambah Tugas"
-    tools:layout="@layout/fragment_tambah_tugas" />
+    tools:layout="@layout/fragment_tambah_jadwal" />
 </navigation>
