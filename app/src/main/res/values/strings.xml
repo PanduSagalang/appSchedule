@@ -1,5 +1,18 @@
 <resources>
     <string name="app_name">Scheduly</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!-- Umum -->
+    <string name="tugas">Tugas</string>
+    <string name="tambah_tugas">Tambah Tugas</string>
+    <string name="batal">Batal</string>
+    <string name="simpan">Simpan</string>
+    <string name="hapus">Hapus</string>
+
+    <!-- Header halaman Tugas -->
+    <string name="manajemen_tugas">Manajemen Tugas</string>
+    <string name="kelola_tugas_deadline">Kelola tugas dan deadline</string>
+    <string name="contoh_tanggal_header">Senin, 25 Januari 2025</string>
+
+    <!-- Placeholder (boleh tetap ada kalau masih dipakai) -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

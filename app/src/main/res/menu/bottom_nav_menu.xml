@@ -12,15 +12,8 @@
         android:icon="@drawable/note"/>
 
     <item
-        android:id="@+id/tambahTugasFragment"
-        android:title="Tambah"
-        android:icon="@drawable/ic_add"/>
-
-    <item
         android:id="@+id/profilefragment"
         android:title="Profile"
         android:icon="@drawable/profile"/>
-
-
 
 </menu>

@@ -20,8 +20,8 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/tambah_tugasFragment"
-        android:name="com.example.scheduly.Tambah_tugasFragment"
-        android:label="fragment_tambah_tugas"
-        tools:layout="@layout/fragment_tambah_tugas" />
+    android:id="@+id/tambahTugasFragment"
+    android:name="com.example.scheduly.TambahTugasFragment"
+    android:label="Tambah Tugas"
+    tools:layout="@layout/fragment_tambah_tugas" />
 </navigation>
