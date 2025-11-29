@@ -1,20 +1,57 @@
 package com.example.scheduly
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
-class TugasFragment : Fragment() {
+class HalamanTugasActivity : AppCompatActivity() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_halaman_tugas)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tugas, container, false)
+        val container = findViewById<LinearLayout>(R.id.containerListTugas)
+        val btnTambah = findViewById<Button>(R.id.btnTambahTugas)
+
+        // --------- Tambahkan data tugas contoh ---------
+        tambahItemTugas(
+            container,
+            judul = "Tugas Algoritma - Program Game",
+            matkul = "Algoritma",
+            desk = "Mengerjakan coding game",
+            deadline = "12 November 2025"
+        )
+
+        tambahItemTugas(
+            container,
+            judul = "Tugas Pancasila - Demokrasi",
+            matkul = "Pancasila",
+            desk = "Membuat makalah",
+            deadline = "15 November 2025"
+        )
+
+        btnTambah.setOnClickListener {
+        }
+    }
+
+    private fun tambahItemTugas(
+        container: LinearLayout,
+        judul: String,
+        matkul: String,
+        desk: String,
+        deadline: String
+    ) {
+        val item = LayoutInflater.from(this)
+            .inflate(R.layout.item_tugas, container, false)
+
+        item.findViewById<TextView>(R.id.tvJudulTugas).text = judul
+        item.findViewById<TextView>(R.id.tvMataKuliah).text = matkul
+        item.findViewById<TextView>(R.id.tvDeskripsiTugas).text = desk
+        item.findViewById<TextView>(R.id.tvDeadline).text = deadline
+
+        container.addView(item)
     }
 }
-

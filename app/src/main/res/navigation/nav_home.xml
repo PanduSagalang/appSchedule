@@ -13,7 +13,7 @@
         android:id="@+id/tugasfragment"
         android:name="com.example.scheduly.TugasFragment"
         android:label="fragment_tugas"
-        tools:layout="@layout/fragment_tugas" />
+        tools:layout="@layout/fragment_halaman_tugas" />
     <fragment
         android:id="@+id/profilefragment"
         android:name="com.example.scheduly.ProfileFragment"
