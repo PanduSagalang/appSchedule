@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homefragment"
-        android:title="Home"
-        android:icon="@drawable/berandaicon_foreground"/>
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
 
     <item
-        android:id="@+id/tugasfragment"
-        android:title="Tugas"
-        android:icon="@drawable/note"/>
+        android:id="@+id/navigation_tugas"
+        android:icon="@drawable/ic_book"
+        android:title="Tugas" />
 
     <item
-        android:id="@+id/profilefragment"
-        android:title="Profile"
-        android:icon="@drawable/profile"/>
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="Profil" />
 
 </menu>

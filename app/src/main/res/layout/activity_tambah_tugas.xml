@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5ECE6"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#F5ECE6">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,21 +15,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:padding="24dp"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="10dp"
-            app:cardUseCompatPadding="true"
-            app:strokeWidth="1dp"
-            app:strokeColor="#E0E0E0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false"
+            app:cardBackgroundColor="@android:color/transparent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="639dp"
+                android:background="@drawable/bg_card_rounded"
+                android:orientation="vertical"
+                android:padding="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,28 +39,28 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/close"
-                        app:tint="#000000"/>
+                        app:tint="#000000" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tambah Tugas"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#000"/>
+                        android:text="Tambah Tugas"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"/>
+                    android:layout_height="20dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nama Tugas"
                     android:textColor="#444"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/etNamaTugas"
@@ -71,8 +68,8 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_input"
-                    android:padding="12dp"
-                    android:hint="Pemrograman Mobile"/>
+                    android:hint="Pemrograman Mobile"
+                    android:padding="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,7 +77,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Mata Kuliah"
                     android:textColor="#444"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/etMataKuliah"
@@ -88,8 +85,8 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_input"
-                    android:padding="12dp"
-                    android:hint="Algoritma"/>
+                    android:hint="Algoritma"
+                    android:padding="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -97,7 +94,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Hari"
                     android:textColor="#444"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/etHari"
@@ -105,9 +102,9 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_input"
-                    android:padding="12dp"
                     android:focusable="false"
-                    android:hint="Senin, 10 November 2025"/>
+                    android:hint="Senin, 10 November 2025"
+                    android:padding="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,7 +112,7 @@
                     android:layout_marginTop="16dp"
                     android:text="Catatan"
                     android:textColor="#444"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/etCatatan"
@@ -123,47 +120,48 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/bg_input"
-                    android:padding="12dp"
-                    android:hint="Membuat program menggunakan python"/>
+                    android:hint="Membuat program menggunakan python"
+                    android:padding="12dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bg_input"
-                    android:padding="12dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="12dp">
 
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:src="@drawable/notifikasi"
-                        app:tint="#FF944D"/>
+                        app:tint="#FF944D" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
                         android:text="Aktifkan notifikasi mendekati deadline"
                         android:textColor="#555"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="130dp"
                     android:layout_height="48dp"
-                    android:layout_marginTop="28dp"
                     android:layout_gravity="end"
-                    android:text="Save"
-                    android:textColor="#FFF"
-                    android:textStyle="bold"
+                    android:layout_marginTop="28dp"
                     android:background="@drawable/bg_button_orange"
                     android:backgroundTint="@null"
-                    android:stateListAnimator="@null"/>
-            </LinearLayout>
+                    android:stateListAnimator="@null"
+                    android:text="Save"
+                    android:textColor="#FFF"
+                    android:textStyle="bold" />
 
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

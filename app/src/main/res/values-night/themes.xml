@@ -8,7 +8,8 @@
         <!-- MATIKAN TINT UNGU -->
         <item name="android:buttonStyle">@style/ButtonStyle.NoTint</item>
 
-        <item name="android:windowBackground">#000000</item> <!-- optional -->
+        <item name="android:windowBackground">/FFF6F2</item>
+        <!-- optional -->
     </style>
 
     <style name="ButtonStyle.NoTint" parent="Widget.MaterialComponents.Button">
