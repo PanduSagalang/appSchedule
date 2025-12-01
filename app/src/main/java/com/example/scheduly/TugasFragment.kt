@@ -16,7 +16,6 @@ class TugasFragment : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.containerListTugas)
         val btnTambah = findViewById<Button>(R.id.btnTambahTugas)
 
-        // --------- Tambahkan data tugas contoh ---------
         tambahItemTugas(
             container,
             judul = "Tugas Algoritma - Program Game",
