@@ -5,11 +5,10 @@
         <item name="colorPrimaryVariant">@android:color/transparent</item>
         <item name="colorAccent">@android:color/transparent</item>
 
-        <!-- MATIKAN TINT UNGU -->
         <item name="android:buttonStyle">@style/ButtonStyle.NoTint</item>
 
-        <item name="android:windowBackground">/FFF6F2</item>
-        <!-- optional -->
+        <item name="android:windowBackground">#FFF6F2</item>
+
     </style>
 
     <style name="ButtonStyle.NoTint" parent="Widget.MaterialComponents.Button">
