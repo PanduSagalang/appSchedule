@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/tugasfragment"
-        android:name="com.example.scheduly.TugasFragment"
+        android:name="com.example.scheduly.Tugas"
         android:label="fragment_tugas"
         tools:layout="@layout/fragment_halaman_tugas" />
     <fragment
@@ -19,9 +19,4 @@
         android:name="com.example.scheduly.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
-    <fragment
-    android:id="@+id/tambahTugasFragment"
-    android:name="com.example.scheduly.TambahTugasFragment"
-    android:label="Tambah Tugas"
-    tools:layout="@layout/fragment_tambah_jadwal" />
 </navigation>
