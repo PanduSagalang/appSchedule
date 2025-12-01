@@ -4,19 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
     app:startDestination="@id/homefragment">
+
     <fragment
         android:id="@+id/homefragment"
         android:name="com.example.scheduly.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
     <fragment
-        android:id="@+id/tugasfragment"
-        android:name="com.example.scheduly.Tugas"
-        android:label="fragment_tugas"
-        tools:layout="@layout/fragment_halaman_tugas" />
-    <fragment
-        android:id="@+id/profilefragment"
+        android:id="@+id/profileFragment"
         android:name="com.example.scheduly.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/tugasFragment"
+        android:name="com.example.scheduly.TugasFragment"
+        android:label="TugasFragment"
+        tools:layout="@layout/fragment_tugas" />
+
 </navigation>

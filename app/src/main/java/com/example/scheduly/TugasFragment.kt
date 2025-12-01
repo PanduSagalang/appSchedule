@@ -2,22 +2,26 @@ package com.example.scheduly
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
-class TugasFragment : AppCompatActivity() {
+class TugasFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_halaman_tugas)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_tugas, container, false)
 
-        val container = findViewById<LinearLayout>(R.id.containerListTugas)
-        val btnTambah = findViewById<Button>(R.id.btnTambahTugas)
+        val containerList = view.findViewById<LinearLayout>(R.id.containerListTugas)
+        val btnTambah = view.findViewById<Button>(R.id.btnTambahTugas)
 
         tambahItemTugas(
-            container,
+            containerList,
             judul = "Tugas Algoritma - Program Game",
             matkul = "Algoritma",
             desk = "Mengerjakan coding game",
@@ -25,7 +29,7 @@ class TugasFragment : AppCompatActivity() {
         )
 
         tambahItemTugas(
-            container,
+            containerList,
             judul = "Tugas Pancasila - Demokrasi",
             matkul = "Pancasila",
             desk = "Membuat makalah",
@@ -34,6 +38,8 @@ class TugasFragment : AppCompatActivity() {
 
         btnTambah.setOnClickListener {
         }
+
+        return view
     }
 
     private fun tambahItemTugas(
@@ -43,7 +49,7 @@ class TugasFragment : AppCompatActivity() {
         desk: String,
         deadline: String
     ) {
-        val item = LayoutInflater.from(this)
+        val item = LayoutInflater.from(requireContext())
             .inflate(R.layout.item_tugas, container, false)
 
         item.findViewById<TextView>(R.id.tvJudulTugas).text = judul

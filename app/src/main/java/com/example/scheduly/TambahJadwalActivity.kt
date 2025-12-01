@@ -14,16 +14,13 @@ class TambahJadwalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_jadwal)
 
-        // Tombol X (close) - sesuaikan dengan ID di XML: btnCloseJadwal
         val btnClose = findViewById<ImageButton>(R.id.btnCloseJadwal)
         btnClose.setOnClickListener {
             finish()
         }
 
-        // Tombol Save - ID di XML: btnSaveJadwal
         val btnSave = findViewById<Button>(R.id.btnSaveJadwal)
         btnSave.setOnClickListener {
-            // TODO: simpan data jadwal (ke DB / list) kalau sudah ada logic-nya
             finish()
         }
         }

@@ -59,15 +59,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:gravity="space_between"
                 android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/tvDeadline"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="12 November 2025"
                     android:textSize="12sp"
+                    android:gravity="center_vertical"
                     android:textColor="#333" />
 
                 <Button
