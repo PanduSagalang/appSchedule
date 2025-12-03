@@ -15,7 +15,7 @@ class TambahJadwalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tambah_jadwal)
 
         val etNamaKelas = findViewById<EditText>(R.id.etNamaKelas)
-        val etCatatan = findViewById<EditText>(R.id.etCatatanJadwal)
+        val etCatatan = findViewById<EditText>(R.id.etCatatan)
         val etHari = findViewById<EditText>(R.id.etHariJadwal)
         val etRuang = findViewById<EditText>(R.id.etRuang)
         val etMulai = findViewById<EditText>(R.id.etStartTime)

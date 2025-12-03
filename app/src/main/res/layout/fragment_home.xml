@@ -54,7 +54,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="292dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_card"
             android:elevation="4dp"
@@ -64,30 +64,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="12dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Jadwal Hari ini"
+                    android:textColor="#333333"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="#333333" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/btnTambahJadwal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_button"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -103,33 +103,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card"
                 android:elevation="3dp"
-                android:padding="12dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:padding="12dp">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/note"
                     android:background="@drawable/ic_book"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:src="@drawable/note" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Desain dan Pemrograman Web"
-                        android:textStyle="bold"
                         android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -149,49 +149,49 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hapus"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="2dp"
                     android:background="@drawable/bg_button"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="6dp"
+                    android:text="Hapus"
                     android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_card"
                 android:elevation="3dp"
-                android:padding="12dp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:padding="12dp">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/note"
                     android:background="@drawable/ic_book"
-                    android:padding="8dp" />
+                    android:padding="8dp"
+                    android:src="@drawable/note" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="12dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tata Kelola IT"
-                        android:textStyle="bold"
                         android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -211,17 +211,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hapus"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="2dp"
                     android:background="@drawable/bg_button"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="6dp"
+                    android:text="Hapus"
                     android:textColor="#FFFFFF"
                     android:textSize="10sp"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
