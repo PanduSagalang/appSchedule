@@ -28,21 +28,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Username atau Password salah!", Toast.LENGTH_SHORT).show()
             }
 
-            if (user == "amel" && pass == "12345") {
-                Toast.makeText(this, "Login Berhasil!", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this, "Username atau Password salah!", Toast.LENGTH_SHORT).show()
-            }
-
-            if (user == "dhea" && pass == "12345") {
-                Toast.makeText(this, "Login Berhasil!", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            } else {
-                Toast.makeText(this, "Username atau Password salah!", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 }
