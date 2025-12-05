@@ -22,9 +22,12 @@
             android:padding="16dp">
 
             <ImageView
-                android:layout_width="346dp"
-                android:layout_height="60dp"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:id="@+id/imageLogo"
+                android:layout_width="288dp"
+                android:layout_height="79dp"
+                android:src="@drawable/scheduly"
+                android:contentDescription="Logo Aplikasi"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,7 +40,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="343dp"
             android:background="@drawable/bg_card"
             android:elevation="4dp"
             android:orientation="vertical"
