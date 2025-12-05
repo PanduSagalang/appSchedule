@@ -23,11 +23,11 @@
 
             <ImageView
                 android:id="@+id/imageLogo"
-                android:layout_width="288dp"
+                android:layout_width="349dp"
                 android:layout_height="79dp"
-                android:src="@drawable/scheduly"
+                android:layout_marginBottom="8dp"
                 android:contentDescription="Logo Aplikasi"
-                android:layout_marginBottom="8dp"/>
+                android:src="@drawable/scheduly" />
 
             <TextView
                 android:layout_width="wrap_content"
