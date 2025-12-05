@@ -46,18 +46,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="Username"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_card"
                 android:elevation="3dp"
-                android:padding="16dp"
-                android:orientation="vertical"
-                android:layout_marginBottom="12dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,18 +69,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="Status"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/bg_card"
                 android:elevation="3dp"
-                android:padding="16dp"
-                android:orientation="vertical"
-                android:layout_marginBottom="12dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -94,17 +92,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="Jenis Kelamin"
-                android:textSize="16sp"
-                android:layout_marginBottom="10dp" />
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_card"
                 android:elevation="3dp"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,16 +113,23 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnLogout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
-            android:backgroundTint="#FF6B6B"
-            android:textColor="#FFFFFF"
-            android:elevation="4dp" />
+            android:gravity="end"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:backgroundTint="#FF6B6B"
+                android:textColor="#FFFFFF"
+                android:elevation="4dp" />
+        </LinearLayout>
 
     </LinearLayout>
 
