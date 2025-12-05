@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp">
-
+x
                     <ImageButton
                         android:id="@+id/btnCloseJadwal"
                         android:layout_width="48dp"
