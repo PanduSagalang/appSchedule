@@ -40,7 +40,7 @@ class TambahTugasActivity : AppCompatActivity() {
                 etTanggal.setText(split[3])
                 etCatatan.setText(split[4])
             }
-            btnSaveTugas.text = "Update Tugas"
+            btnSaveTugas.text = "Update"
         }
 
         etTanggal.setOnClickListener {

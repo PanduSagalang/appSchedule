@@ -45,7 +45,7 @@ class TambahJadwalActivity : AppCompatActivity() {
                 etMulai.setText(split[5])
                 etSelesai.setText(split[6])
             }
-            btnSave.text = "Update Jadwal"
+            btnSave.text = "Update"
         }
 
 

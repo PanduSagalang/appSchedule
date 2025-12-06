@@ -8,7 +8,6 @@
     android:orientation="horizontal"
     android:padding="12dp">
 
-    <!-- ICON -->
     <ImageView
         android:id="@+id/ivIcon"
         android:layout_width="40dp"
@@ -17,7 +16,6 @@
         android:padding="8dp"
         android:src="@drawable/note" />
 
-    <!-- TEXT AREA -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,21 +49,18 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!-- BUTTON HAPUS (TETAP TEXTVIEW SESUAI DESAINMU) -->
     <TextView
         android:id="@+id/btnHapusJadwal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="2dp"
         android:background="@drawable/bg_button"
-        android:paddingLeft="10dp"
-        android:paddingTop="6dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="6dp"
+        android:backgroundTint="#FF6B6B"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
         android:text="Hapus"
         android:textColor="#FFFFFF"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold" />
+
 
 </LinearLayout>

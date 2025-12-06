@@ -14,7 +14,6 @@
         android:padding="16dp"
         android:background="#FFF5EF">
 
-        <!-- HEADER -->
         <LinearLayout
             android:id="@+id/headerCard"
             android:layout_width="match_parent"
@@ -53,17 +52,15 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- CARD JADWAL HARI INI -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="292dp"
+            android:layout_height="186dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_card"
             android:elevation="4dp"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- ROW TITLE + BUTTON -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,36 +84,35 @@
                     android:background="@drawable/bg_button"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="8dp"
-                    android:paddingRight="12dp"
-                    android:paddingBottom="8dp">
+                    android:padding="10dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tambah Jadwal"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <!-- CONTAINER JADWAL HARI INI -->
             <LinearLayout
                 android:id="@+id/llJadwalHariIniContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"/>
+                android:orientation="vertical" />
         </LinearLayout>
 
-        <!-- ====== SECTION JADWAL SELANJUTNYA (DI LUAR CARD) ====== -->
         <TextView
             android:id="@+id/tvNextTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jadwal Berikutnya"
+            android:text="Jadwal Mendatang"
             android:textStyle="bold"
             android:textColor="#333333"
             android:textSize="15sp"
