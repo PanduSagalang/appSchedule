@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class TugasFragment : Fragment() {
@@ -21,7 +22,6 @@ class TugasFragment : Fragment() {
         val containerList = view.findViewById<LinearLayout>(R.id.containerListTugas)
         val btnTambahTugasFragment = view.findViewById<Button>(R.id.btnTambahTugas)
 
-
         btnTambahTugasFragment.setOnClickListener {
             startActivity(Intent(requireContext(), TambahTugasActivity::class.java))
         }
@@ -34,6 +34,13 @@ class TugasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadTugas(view.findViewById(R.id.containerListTugas))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view?.findViewById<LinearLayout>(R.id.containerListTugas)?.let {
+            loadTugas(it)
+        }
     }
 
 
@@ -53,6 +60,19 @@ class TugasFragment : Fragment() {
                 itemView.findViewById<TextView>(R.id.tvMataKuliah).text = parts[1]
                 itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = parts[3]
                 itemView.findViewById<TextView>(R.id.tvDeadline).text = parts[2]
+
+                itemView.setOnClickListener {
+                    val intent = Intent(requireContext(), TambahTugasActivity::class.java)
+                    intent.putExtra("editData", tugas) //
+                    startActivity(intent)
+                }
+
+                val btnHapus = itemView.findViewById<Button>(R.id.btnHapusTugas)
+                btnHapus.setOnClickListener {
+                    Storage.deleteTugas(requireContext(), tugas)
+                    loadTugas(container)
+                    Toast.makeText(requireContext(), "Tugas dihapus!", Toast.LENGTH_SHORT).show()
+                }
 
                 container.addView(itemView)
             }

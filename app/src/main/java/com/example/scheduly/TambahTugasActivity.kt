@@ -13,6 +13,9 @@ import java.util.Locale
 
 
 class TambahTugasActivity : AppCompatActivity() {
+
+    private var oldData: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_tugas)
@@ -25,6 +28,17 @@ class TambahTugasActivity : AppCompatActivity() {
         val etCatatan = findViewById<EditText>(R.id.etCatatan)
 
         btnClose.setOnClickListener { finish() }
+
+        oldData = intent.getStringExtra("editData")
+        if (oldData != null) {
+            val split = oldData!!.split("#")
+            etNamaTugas.setText(split[0])
+            etMataKuliah.setText(split[1])
+            etTanggal.setText(split[2])
+            etCatatan.setText(split[3])
+
+            btnSaveTugas.text = "Update Tugas"
+        }
 
         etTanggal.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -56,14 +70,22 @@ class TambahTugasActivity : AppCompatActivity() {
                 Toast.makeText(this, "Semua data wajib diisi!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val newData = "$nama#$matkul#$hari#$catatan"
 
-            val data = "$nama#$matkul#$hari#$catatan"
+
+            if (oldData != null) {
+                Storage.deleteTugas(this, oldData!!)
+            }
+
 
             // Simpan ke Storage
-            Storage.saveTugas(this, data)
+            Storage.saveTugas(this, newData)
 
 
-            Toast.makeText(this, "Tugas disimpan!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                if (oldData == null) "Tugas disimpan!" else "Tugas berhasil diupdate!",
+                Toast.LENGTH_SHORT
+            ).show()
             finish()
         }
     }

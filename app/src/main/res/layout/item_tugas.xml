@@ -72,10 +72,10 @@
                     android:textColor="#333" />
 
                 <Button
-                    android:id="@+id/btnHapus"
+                    android:id="@+id/btnEdit"
                     android:layout_width="80dp"
                     android:layout_height="32dp"
-                    android:text="Hapus"
+                    android:text="Edit"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
@@ -84,17 +84,27 @@
                     android:stateListAnimator="@null"
                     android:backgroundTint="@null" />
 
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/btnHapusTugas"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="Hapus"
+                    android:textSize="12sp"
+                    android:backgroundTint="#FF6B6B"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:stateListAnimator="@null" />
+
+
             </LinearLayout>
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/btnDetail"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/outline_arrow_forward_ios_24"
-            app:tint="#777" />
+
 
     </LinearLayout>
 
