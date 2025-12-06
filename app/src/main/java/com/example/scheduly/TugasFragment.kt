@@ -52,24 +52,29 @@ class TugasFragment : Fragment() {
         for (tugas in semuaTugas) {
             val parts = tugas.split("#")
 
-            if (parts.size >= 4) {
+            if (parts.size >= 5) {
                 val itemView = LayoutInflater.from(requireContext())
                     .inflate(R.layout.item_tugas, container, false)
 
-                itemView.findViewById<TextView>(R.id.tvJudulTugas).text = parts[0]
-                itemView.findViewById<TextView>(R.id.tvMataKuliah).text = parts[1]
-                itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = parts[3]
-                itemView.findViewById<TextView>(R.id.tvDeadline).text = parts[2]
+                val namaTugas = parts[1]
+                val matkul = parts[2]
+                val hari = parts[3]
+                val catatan = parts[4]
+
+                itemView.findViewById<TextView>(R.id.tvJudulTugas).text = namaTugas
+                itemView.findViewById<TextView>(R.id.tvMataKuliah).text = matkul
+                itemView.findViewById<TextView>(R.id.tvDeadline).text = hari
+                itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = catatan
 
                 itemView.setOnClickListener {
                     val intent = Intent(requireContext(), TambahTugasActivity::class.java)
-                    intent.putExtra("editData", tugas) //
+                    intent.putExtra("editData", tugas)
                     startActivity(intent)
                 }
 
                 val btnHapus = itemView.findViewById<Button>(R.id.btnHapusTugas)
                 btnHapus.setOnClickListener {
-                    Storage.deleteTugas(requireContext(), tugas)
+                    Storage.deleteTugas(requireContext(), tugas) // tetap pakai string full
                     loadTugas(container)
                     Toast.makeText(requireContext(), "Tugas dihapus!", Toast.LENGTH_SHORT).show()
                 }

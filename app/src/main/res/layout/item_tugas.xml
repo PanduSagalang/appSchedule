@@ -71,22 +71,7 @@
                     android:gravity="center_vertical"
                     android:textColor="#333" />
 
-                <Button
-                    android:id="@+id/btnEdit"
-                    android:layout_width="80dp"
-                    android:layout_height="32dp"
-                    android:text="Edit"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/bg_button_orange"
-                    android:padding="4dp"
-                    android:stateListAnimator="@null"
-                    android:backgroundTint="@null" />
 
-                <Space
-                    android:layout_width="8dp"
-                    android:layout_height="match_parent" />
 
                 <Button
                     android:id="@+id/btnHapusTugas"

@@ -6,10 +6,10 @@ data class Tugas(
     val hari: String,
     val catatan: String,
     val isNotifikasiAktif: Boolean,
-    var status: StatusTugas
 )
 
 data class Jadwal(
+    val id: Long = System.currentTimeMillis(),
     val namaKelas: String,
     val catatan: String,
     val hari: String,
@@ -18,8 +18,3 @@ data class Jadwal(
     val jamSelesai: String,
     val isNotifikasiAktif: Boolean
 )
-
-enum class StatusTugas {
-    Selesai,
-    Belum_Selesai
-}
