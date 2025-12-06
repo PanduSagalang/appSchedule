@@ -23,6 +23,30 @@ object Storage {
         return raw.split(";").filter { it.isNotBlank() }
     }
 
+    fun editTugas(context: Context, id: String, nama: String, matkul: String, hari: String, catatan: String) {
+        val shared = context.getSharedPreferences("tugas", Context.MODE_PRIVATE)
+        val list = shared.getStringSet("list", mutableSetOf())!!.toMutableSet()
+
+        val baru = list.map {
+            if (it.startsWith("$id#")) "$id#$nama#$matkul#$hari#$catatan"
+            else it
+        }.toMutableSet()
+
+        shared.edit().putStringSet("list", baru).apply()
+    }
+
+    fun deleteTugas(context: Context, target: String) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val raw = prefs.getString(KEY_TUGAS, "") ?: ""
+
+        val listBaru = raw
+            .split(";")
+            .filter { it.isNotBlank() && it != target }
+            .joinToString(";")
+
+        prefs.edit().putString(KEY_TUGAS, listBaru + ";").apply()
+    }
+
 
     //   JADWAL (
     fun saveJadwal(context: Context, data: String) {
