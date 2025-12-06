@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="USER PROFILE"
                 android:textColor="#FFFFFF"
-                android:textSize="22sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
