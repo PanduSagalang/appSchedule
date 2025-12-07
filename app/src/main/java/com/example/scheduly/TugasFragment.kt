@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class TugasFragment : Fragment() {
@@ -47,40 +46,33 @@ class TugasFragment : Fragment() {
     private fun loadTugas(container: LinearLayout) {
         container.removeAllViews()
 
-        val semuaTugas = Storage.getTugas(requireContext())
+        val listTugas = Storage.getTugasList(requireContext())
 
-        for (tugas in semuaTugas) {
-            val parts = tugas.split("#")
+        for (t in listTugas) {
+            val itemView = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_tugas, container, false)
 
-            if (parts.size >= 5) {
-                val itemView = LayoutInflater.from(requireContext())
-                    .inflate(R.layout.item_tugas, container, false)
+            itemView.findViewById<TextView>(R.id.tvJudulTugas).text = t.namaTugas
+            itemView.findViewById<TextView>(R.id.tvMataKuliah).text = t.mataKuliah
+            itemView.findViewById<TextView>(R.id.tvDeadline).text = t.hari
+            itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = t.catatan
 
-                val namaTugas = parts[1]
-                val matkul = parts[2]
-                val hari = parts[3]
-                val catatan = parts[4]
+            itemView.setOnClickListener {
+                val data = "${t.id}#${t.namaTugas}#${t.mataKuliah}#${t.hari}#${t.catatan}"
 
-                itemView.findViewById<TextView>(R.id.tvJudulTugas).text = namaTugas
-                itemView.findViewById<TextView>(R.id.tvMataKuliah).text = matkul
-                itemView.findViewById<TextView>(R.id.tvDeadline).text = hari
-                itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = catatan
-
-                itemView.setOnClickListener {
-                    val intent = Intent(requireContext(), TambahTugasActivity::class.java)
-                    intent.putExtra("editData", tugas)
-                    startActivity(intent)
-                }
-
-                val btnHapus = itemView.findViewById<Button>(R.id.btnHapusTugas)
-                btnHapus.setOnClickListener {
-                    Storage.deleteTugas(requireContext(), tugas) // tetap pakai string full
-                    loadTugas(container)
-                    Toast.makeText(requireContext(), "Tugas dihapus!", Toast.LENGTH_SHORT).show()
-                }
-
-                container.addView(itemView)
+                val intent = Intent(requireContext(), TambahTugasActivity::class.java)
+                intent.putExtra("editData", data)
+                startActivity(intent)
             }
+
+            val btnHapus = itemView.findViewById<Button>(R.id.btnHapusTugas)
+            btnHapus.setOnClickListener {
+                Storage.deleteTugasObj(requireContext(), t.id)
+                loadTugas(container)
+            }
+
+            container.addView(itemView)
         }
     }
+
 }

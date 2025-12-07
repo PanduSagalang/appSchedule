@@ -11,40 +11,77 @@ object Storage {
 
     //   TUGAS
 
-    fun saveTugas(context: Context, data: String) {
+    fun saveTugasObj(context: Context, tugas: Tugas) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val existing = prefs.getString(KEY_TUGAS, "") ?: ""
-        prefs.edit().putString(KEY_TUGAS, existing + data + ";").apply()
+
+        val existing = getTugasList(context)
+
+        val updated = existing.toMutableList()
+        updated.add(tugas)
+
+        val data = updated.joinToString(";") { tugasToString(it) }
+
+        prefs.edit().putString(KEY_TUGAS, data).apply()
     }
 
-    fun getTugas(context: Context): List<String> {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val raw = prefs.getString(KEY_TUGAS, "") ?: ""
-        return raw.split(";").filter { it.isNotBlank() }
-    }
-
-    fun editTugas(context: Context, id: String, nama: String, matkul: String, hari: String, catatan: String) {
-        val shared = context.getSharedPreferences("tugas", Context.MODE_PRIVATE)
-        val list = shared.getStringSet("list", mutableSetOf())!!.toMutableSet()
-
-        val baru = list.map {
-            if (it.startsWith("$id#")) "$id#$nama#$matkul#$hari#$catatan"
-            else it
-        }.toMutableSet()
-
-        shared.edit().putStringSet("list", baru).apply()
-    }
-
-    fun deleteTugas(context: Context, target: String) {
+    fun getTugasList(context: Context): MutableList<Tugas> {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val raw = prefs.getString(KEY_TUGAS, "") ?: ""
 
-        val listBaru = raw
-            .split(";")
-            .filter { it.isNotBlank() && it != target }
-            .joinToString(";")
+        if (raw.isBlank()) return mutableListOf()
 
-        prefs.edit().putString(KEY_TUGAS, listBaru + ";").apply()
+        val list = raw.split(";")
+        val result = mutableListOf<Tugas>()
+
+        for (item in list) {
+            val s = item.split("#")
+            if (s.size >= 6) {
+                result.add(
+                    Tugas(
+                        id = s[0].toLong(),
+                        namaTugas = s[1],
+                        mataKuliah = s[2],
+                        hari = s[3],
+                        catatan = s[4],
+                        isNotifikasiAktif = false
+                    )
+                )
+            }
+        }
+
+        return result
+    }
+
+    fun deleteTugasObj(context: Context, id: Long) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val list = getTugasList(context)
+
+        val filtered = list.filter { it.id != id }
+
+        val data = filtered.joinToString(";") { tugasToString(it) }
+        prefs.edit().putString(KEY_TUGAS, data).apply()
+    }
+    fun updateTugasObj(context: Context, tugasBaru: Tugas) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val raw = prefs.getString(KEY_TUGAS, "") ?: ""
+        val list = raw.split(";").filter { it.isNotBlank() }
+
+        val updated = list.map {
+            val s = it.split("#")
+            if (s.isNotEmpty() && s[0] == tugasBaru.id.toString()) {
+                tugasToString(tugasBaru)
+            } else {
+                it
+            }
+        }
+
+        prefs.edit().putString(KEY_TUGAS, updated.joinToString(";") + ";").apply()
+    }
+
+
+
+    private fun tugasToString(t: Tugas): String {
+        return "${t.id}#${t.namaTugas}#${t.mataKuliah}#${t.hari}#${t.catatan}#${t.isNotifikasiAktif}"
     }
 
 

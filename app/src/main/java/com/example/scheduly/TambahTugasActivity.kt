@@ -15,7 +15,7 @@ import java.util.Locale
 class TambahTugasActivity : AppCompatActivity() {
 
     private var oldData: String? = null
-    private var oldId: String? = null
+    private var oldId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class TambahTugasActivity : AppCompatActivity() {
         if (oldData != null) {
             val split = oldData!!.split("#")
             if (split.size >= 5) {
-                oldId = split[0]
+                oldId = split[0].toLongOrNull()
                 etNamaTugas.setText(split[1])
                 etMataKuliah.setText(split[2])
                 etTanggal.setText(split[3])
@@ -64,41 +64,44 @@ class TambahTugasActivity : AppCompatActivity() {
         }
 
         btnSaveTugas.setOnClickListener {
-            val nama = etNamaTugas.text.toString()
-            val matkul = etMataKuliah.text.toString()
-            val hari = etTanggal.text.toString()
-            val catatan = etCatatan.text.toString()
+
+            val nama = etNamaTugas.text.toString().trim()
+            val matkul = etMataKuliah.text.toString().trim()
+            val hari = etTanggal.text.toString().trim()
+            val catatan = etCatatan.text.toString().trim()
 
             if (nama.isBlank() || matkul.isBlank() || hari.isBlank()) {
                 Toast.makeText(this, "Semua data wajib diisi!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val idFinal = oldId ?: System.currentTimeMillis().toString()
 
-            val newData = "$idFinal#$nama#$matkul#$hari#$catatan"
+            if (oldId != null) {
+                val tugasUpdate = Tugas(
+                    id = oldId!!,
+                    namaTugas = nama,
+                    mataKuliah = matkul,
+                    hari = hari,
+                    catatan = catatan,
+                    isNotifikasiAktif = false
+                )
 
-            if (oldData == null) {
-                Storage.saveTugas(this, newData)
-                Toast.makeText(this, "Tugas disimpan!", Toast.LENGTH_SHORT).show()
-
-            } else {
-                if (oldId != null) {
-                    Storage.editTugas(
-                        this,
-                        idFinal,
-                        nama,
-                        matkul,
-                        hari,
-                        catatan
-                    )
-                } else {
-                    Storage.deleteTugas(this, oldData!!)
-                    Storage.saveTugas(this, newData)
-                }
-
+                Storage.updateTugasObj(this, tugasUpdate)
                 Toast.makeText(this, "Tugas berhasil diupdate!", Toast.LENGTH_SHORT).show()
+                finish()
+                return@setOnClickListener
             }
 
+            val tugasBaru = Tugas(
+                id = System.currentTimeMillis(),
+                namaTugas = nama,
+                mataKuliah = matkul,
+                hari = hari,
+                catatan = catatan,
+                isNotifikasiAktif = false
+            )
+
+            Storage.saveTugasObj(this, tugasBaru)
+            Toast.makeText(this, "Tugas disimpan!", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

@@ -1,6 +1,7 @@
 package com.example.scheduly
 
 data class Tugas(
+    val id: Long = System.currentTimeMillis(),
     val namaTugas: String,
     val mataKuliah: String,
     val hari: String,
