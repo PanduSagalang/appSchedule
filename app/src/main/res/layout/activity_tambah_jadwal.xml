@@ -84,7 +84,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Catatan"
+                    android:text="Dosen"
                     android:textColor="#666666"
                     android:textSize="14sp"
                     android:layout_marginBottom="4dp"/>
@@ -95,7 +95,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/bg_input"
                     android:padding="12dp"
-                    android:hint="Tidak ada tugas"
+                    android:hint="Candra"
                     android:textColor="#222222"
                     android:textSize="14sp"
                     android:inputType="text"

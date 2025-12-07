@@ -71,8 +71,6 @@
                     android:gravity="center_vertical"
                     android:textColor="#333" />
 
-
-
                 <Button
                     android:id="@+id/btnHapusTugas"
                     android:layout_width="80dp"
@@ -84,12 +82,9 @@
                     android:padding="4dp"
                     android:stateListAnimator="@null" />
 
-
             </LinearLayout>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

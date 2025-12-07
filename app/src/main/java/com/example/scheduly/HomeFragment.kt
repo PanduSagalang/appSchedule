@@ -24,7 +24,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         val tvNama = view.findViewById<TextView>(R.id.tvNama)
         val tvTanggal = view.findViewById<TextView>(R.id.tvTanggal)
         val btnTambahJadwal = view.findViewById<LinearLayout>(R.id.btnTambahJadwal)
