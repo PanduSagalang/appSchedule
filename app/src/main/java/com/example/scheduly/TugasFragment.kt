@@ -42,7 +42,6 @@ class TugasFragment : Fragment() {
         }
     }
 
-
     private fun loadTugas(container: LinearLayout) {
         container.removeAllViews()
 
