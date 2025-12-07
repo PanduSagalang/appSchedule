@@ -157,5 +157,4 @@ object Storage {
         return "${j.id}#${j.namaKelas}#${j.catatan}#${j.hari}#${j.ruang}#${j.jamMulai}#${j.jamSelesai}"
     }
 
-
 }
