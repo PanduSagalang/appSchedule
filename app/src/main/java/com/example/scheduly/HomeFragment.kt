@@ -107,7 +107,7 @@ class HomeFragment : Fragment() {
             itemView.setOnClickListener {
                 val raw = rawById[jadwal.id]
                 val intent = Intent(requireContext(), TambahJadwalActivity::class.java)
-                intent.putExtra("editData", raw) // TambahJadwalActivity kamu sudah support ini
+                intent.putExtra("editData", raw)
                 startActivity(intent)
             }
 

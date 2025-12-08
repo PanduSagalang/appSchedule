@@ -8,7 +8,6 @@ object Storage {
     private const val KEY_TUGAS = "list_tugas"
     private const val KEY_JADWAL = "list_jadwal"
 
-
     //   TUGAS
 
     fun saveTugasObj(context: Context, tugas: Tugas) {
@@ -78,12 +77,9 @@ object Storage {
         prefs.edit().putString(KEY_TUGAS, updated.joinToString(";") + ";").apply()
     }
 
-
-
     private fun tugasToString(t: Tugas): String {
         return "${t.id}#${t.namaTugas}#${t.mataKuliah}#${t.hari}#${t.catatan}#${t.isNotifikasiAktif}"
     }
-
 
     //   JADWAL (
     fun saveJadwal(context: Context, data: String) {
