@@ -8,13 +8,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var llHariIni: LinearLayout
-    private lateinit var llNext: LinearLayout
+    private lateinit var rvHariIni: RecyclerView
+    private lateinit var rvNext: RecyclerView
+
+    private lateinit var adapterHariIni: JadwalAdapter
+    private lateinit var adapterNext: JadwalAdapter
 
     private val localeID = Locale("id", "ID")
     private val sdfFull = SimpleDateFormat("EEEE, dd MMMM yyyy", localeID)
@@ -22,27 +27,60 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
         val tvNama = view.findViewById<TextView>(R.id.tvNama)
         val tvTanggal = view.findViewById<TextView>(R.id.tvTanggal)
         val btnTambahJadwal = view.findViewById<LinearLayout>(R.id.btnTambahJadwal)
 
-        llHariIni = view.findViewById(R.id.llJadwalHariIniContainer)
-        llNext = view.findViewById(R.id.llJadwalNextContainer)
+        rvHariIni = view.findViewById(R.id.rvHariIni)
+        rvNext = view.findViewById(R.id.rvNext)
 
         tvNama.text = "Hallo Pandu Putra!!"
+        tvTanggal.text = sdfFull.format(Date())
 
-        val locale = Locale("id", "ID")
-        val sdf = SimpleDateFormat("EEEE, dd MMMM yyyy", locale)
-        tvTanggal.text = sdf.format(Date())
+        rvHariIni.layoutManager = LinearLayoutManager(requireContext())
+        rvNext.layoutManager = LinearLayoutManager(requireContext())
 
+        adapterHariIni = JadwalAdapter(
+            mutableListOf(),
+            rawById = emptyMap(),
+            onDelete = {
+                Storage.deleteJadwalObj(requireContext(), it)
+                loadJadwal()
+            },
+            onEdit = {
+                startActivity(
+                    Intent(requireContext(), TambahJadwalActivity::class.java)
+                        .putExtra("editData", it)
+                )
+            }
+        )
+
+        adapterNext = JadwalAdapter(
+            mutableListOf(),
+            rawById = emptyMap(),
+            onDelete = {
+                Storage.deleteJadwalObj(requireContext(), it)
+                loadJadwal()
+            },
+            onEdit = {
+                startActivity(
+                    Intent(requireContext(), TambahJadwalActivity::class.java)
+                        .putExtra("editData", it)
+                )
+            }
+        )
+
+        rvHariIni.adapter = adapterHariIni
+        rvNext.adapter = adapterNext
 
         btnTambahJadwal.setOnClickListener {
             startActivity(Intent(requireContext(), TambahJadwalActivity::class.java))
         }
-        loadJadwal()
 
+        loadJadwal()
         return view
     }
 
@@ -52,98 +90,72 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadJadwal() {
-        llHariIni.removeAllViews()
-        llNext.removeAllViews()
-
         val listObj = Storage.getJadwalList(requireContext())
         val listRaw = Storage.getJadwal(requireContext())
 
         val rawById = mutableMapOf<Long, String>()
-        for (raw in listRaw) {
+        listRaw.forEach { raw ->
             val sp = raw.split("#")
-            if (sp.isNotEmpty()) {
-                val id = sp[0].toLongOrNull()
-                if (id != null) rawById[id] = raw
+            sp.firstOrNull()?.toLongOrNull()?.let { id ->
+                rawById[id] = raw
             }
         }
 
-        val todayStr = sdfFull.format(Date())
-        val todayDate = parseDate(todayStr)
+        val today = sdfFull.parse(sdfFull.format(Date())) ?: return
 
         val hariIniList = mutableListOf<Jadwal>()
         val nextList = mutableListOf<Jadwal>()
 
-        for (j in listObj) {
-            val d = parseDate(j.hari)
-            if (d == null || todayDate == null) continue
-
-            if (isSameDay(d, todayDate)) {
-                hariIniList.add(j)
-            } else if (d.after(todayDate)) {
-                nextList.add(j)
-            }
+        listObj.forEach { j ->
+            val d = parseDate(j.hari) ?: return@forEach
+            if (isSameDay(d, today)) hariIniList.add(j)
+            else if (d.after(today)) nextList.add(j)
         }
 
-        hariIniList.sortWith(compareBy({ parseDate(it.hari) }, { it.jamMulai }))
-        nextList.sortWith(compareBy({ parseDate(it.hari) }, { it.jamMulai }))
+        hariIniList.sortBy { it.jamMulai }
+        nextList.sortBy { it.jamMulai }
 
-        for (jadwal in hariIniList) {
-            val itemView = layoutInflater.inflate(R.layout.item_jadwal, llHariIni, false)
-
-            val tvNamaKelas = itemView.findViewById<TextView>(R.id.tvNamaKelas)
-            val tvDetail = itemView.findViewById<TextView>(R.id.tvDetail)
-            val tvCatatan = itemView.findViewById<TextView>(R.id.tvCatatan)
-            val btnHapus = itemView.findViewById<TextView>(R.id.btnHapusJadwal)
-
-            tvNamaKelas.text = jadwal.namaKelas
-            tvDetail.text = "Ruang ${jadwal.ruang}, ${jadwal.jamMulai}–${jadwal.jamSelesai}"
-            tvCatatan.text = "Dosen : ${jadwal.catatan}"
-
-            btnHapus.setOnClickListener {
-                Storage.deleteJadwalObj(requireContext(), jadwal.id)
+        // update data ke adapter
+        adapterHariIni = JadwalAdapter(
+            hariIniList.toMutableList(),
+            rawById,
+            onDelete = {
+                Storage.deleteJadwalObj(requireContext(), it)
                 loadJadwal()
+            },
+            onEdit = {
+                startActivity(
+                    Intent(requireContext(), TambahJadwalActivity::class.java)
+                        .putExtra("editData", it)
+                )
             }
+        )
 
-            itemView.setOnClickListener {
-                val raw = rawById[jadwal.id]
-                val intent = Intent(requireContext(), TambahJadwalActivity::class.java)
-                intent.putExtra("editData", raw)
-                startActivity(intent)
-            }
-
-            llHariIni.addView(itemView)
-        }
-
-        for (jadwal in nextList) {
-            val itemView = layoutInflater.inflate(R.layout.item_jadwal, llNext, false)
-
-            val tvNamaKelas = itemView.findViewById<TextView>(R.id.tvNamaKelas)
-            val tvDetail = itemView.findViewById<TextView>(R.id.tvDetail)
-            val tvCatatan = itemView.findViewById<TextView>(R.id.tvCatatan)
-            val btnHapus = itemView.findViewById<TextView>(R.id.btnHapusJadwal)
-
-            tvNamaKelas.text = jadwal.namaKelas
-            tvDetail.text = "(${jadwal.hari}) • Ruang ${jadwal.ruang}, ${jadwal.jamMulai}–${jadwal.jamSelesai}"
-            tvCatatan.text = "Dosen : ${jadwal.catatan}"
-
-            btnHapus.setOnClickListener {
-                Storage.deleteJadwalObj(requireContext(), jadwal.id)
+        adapterNext = JadwalAdapter(
+            nextList.toMutableList(),
+            rawById,
+            onDelete = {
+                Storage.deleteJadwalObj(requireContext(), it)
                 loadJadwal()
+            },
+            onEdit = {
+                startActivity(
+                    Intent(requireContext(), TambahJadwalActivity::class.java)
+                        .putExtra("editData", it)
+                )
             }
+        )
 
-            itemView.setOnClickListener {
-                val raw = rawById[jadwal.id]
-                val intent = Intent(requireContext(), TambahJadwalActivity::class.java)
-                intent.putExtra("editData", raw)
-                startActivity(intent)
-            }
-
-            llNext.addView(itemView)
-        }
+        rvHariIni.adapter = adapterHariIni
+        rvNext.adapter = adapterNext
     }
 
     private fun parseDate(text: String): Date? {
-        return try { sdfFull.parse(text) } catch (e: Exception) { null }
+        return try {
+            sdfFull.parse(text)
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private fun isSameDay(d1: Date, d2: Date): Boolean {

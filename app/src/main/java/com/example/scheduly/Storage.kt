@@ -50,6 +50,9 @@ object Storage {
 
         return result
     }
+    fun getTugasById(context: Context, id: Long): Tugas? {
+        return getTugasList(context).find { it.id == id }
+    }
 
     fun deleteTugasObj(context: Context, id: Long) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)

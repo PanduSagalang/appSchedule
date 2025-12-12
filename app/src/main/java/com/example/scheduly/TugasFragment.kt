@@ -8,70 +8,81 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class TugasFragment : Fragment() {
+
+    private lateinit var rvTugas: RecyclerView
+    private lateinit var adapter: TugasAdapter
+    private lateinit var tambahTugasLauncher: ActivityResultLauncher<Intent>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        tambahTugasLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                    loadTugas()
+                }
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_tugas, container, false)
 
-        val containerList = view.findViewById<LinearLayout>(R.id.containerListTugas)
-        val btnTambahTugasFragment = view.findViewById<Button>(R.id.btnTambahTugas)
+        rvTugas = view.findViewById(R.id.rvTugas)
+        val btnTambah = view.findViewById<Button>(R.id.btnTambahTugas)
+        val tvTanggal = view.findViewById<TextView>(R.id.txtTanggalHariIni)
 
-        btnTambahTugasFragment.setOnClickListener {
-            startActivity(Intent(requireContext(), TambahTugasActivity::class.java))
+        tvTanggal.text = SimpleDateFormat(
+            "EEEE, dd MMMM yyyy",
+            Locale("id", "ID")
+        ).format(Date())
+
+        rvTugas.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter = TugasAdapter(
+            mutableListOf(),
+            onDelete = {
+                Storage.deleteTugasObj(requireContext(), it)
+                loadTugas()
+            },
+            onEdit = { tugas ->
+                tambahTugasLauncher.launch(
+                    Intent(requireContext(), TambahTugasActivity::class.java)
+                        .putExtra("tugasId", tugas.id)
+                )
+            }
+        )
+
+        rvTugas.adapter = adapter
+
+        btnTambah.setOnClickListener {
+            tambahTugasLauncher.launch(
+                Intent(requireContext(), TambahTugasActivity::class.java)
+            )
         }
 
-        loadTugas(containerList)
-
+        loadTugas()
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        loadTugas(view.findViewById(R.id.containerListTugas))
+    private fun loadTugas() {
+        if (!isAdded) return   // 🔒 safety
+        val list = Storage.getTugasList(requireContext())
+        adapter.submitData(list)
     }
-
-    override fun onResume() {
-        super.onResume()
-        view?.findViewById<LinearLayout>(R.id.containerListTugas)?.let {
-            loadTugas(it)
-        }
-    }
-
-    private fun loadTugas(container: LinearLayout) {
-        container.removeAllViews()
-
-        val listTugas = Storage.getTugasList(requireContext())
-
-        for (t in listTugas) {
-            val itemView = LayoutInflater.from(requireContext())
-                .inflate(R.layout.item_tugas, container, false)
-
-            itemView.findViewById<TextView>(R.id.tvJudulTugas).text = t.namaTugas
-            itemView.findViewById<TextView>(R.id.tvMataKuliah).text = t.mataKuliah
-            itemView.findViewById<TextView>(R.id.tvDeadline).text = t.hari
-            itemView.findViewById<TextView>(R.id.tvDeskripsiTugas).text = t.catatan
-
-            itemView.setOnClickListener {
-                val data = "${t.id}#${t.namaTugas}#${t.mataKuliah}#${t.hari}#${t.catatan}"
-
-                val intent = Intent(requireContext(), TambahTugasActivity::class.java)
-                intent.putExtra("editData", data)
-                startActivity(intent)
-            }
-
-            val btnHapus = itemView.findViewById<Button>(R.id.btnHapusTugas)
-            btnHapus.setOnClickListener {
-                Storage.deleteTugasObj(requireContext(), t.id)
-                loadTugas(container)
-            }
-
-            container.addView(itemView)
-        }
-    }
-
 }

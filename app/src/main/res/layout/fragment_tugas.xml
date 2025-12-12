@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:background="#F5ECE6">
 
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <!-- HEADER -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="140dp"
@@ -19,6 +21,7 @@
             app:cardCornerRadius="22dp"
             app:cardElevation="8dp"
             android:backgroundTint="@null">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,32 +36,32 @@
 
                 <TextView
                     android:text="Manajemen Tugas"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:text="Kelola tugas dan deadline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginTop="4dp" />
 
                 <TextView
                     android:id="@+id/txtTanggalHariIni"
                     android:text="Senin, 25 Januari 2025"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
-                    android:layout_marginTop="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
+                    android:layout_marginTop="2dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- TITLE + BUTTON -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -86,12 +89,13 @@
                 android:background="@drawable/bg_button_orange"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/containerListTugas"
-            android:orientation="vertical"
+        <!-- RECYCLER VIEW -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTugas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_tugas"/>
 
     </LinearLayout>
 </ScrollView>
