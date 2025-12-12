@@ -32,7 +32,7 @@ class JadwalAdapter(
         holder.tvNamaKelas.text = jadwal.namaKelas
         holder.tvDetail.text =
             "Ruang ${jadwal.ruang}, ${jadwal.jamMulai}–${jadwal.jamSelesai}"
-        holder.tvCatatan.text = "Dosen : ${jadwal.catatan}"
+        holder.tvCatatan.text = "Dosen : ${jadwal.dosen}"
 
         holder.btnHapus.setOnClickListener {
             onDelete(jadwal.id)

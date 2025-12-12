@@ -1,6 +1,5 @@
 package com.example.scheduly
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +11,9 @@ import java.util.*
 class TambahTugasActivity : AppCompatActivity() {
 
     private var oldId: Long? = null
+
+    private val localeID = Locale("id", "ID")
+    private val sdfTanggal = SimpleDateFormat("dd MMMM yyyy", localeID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +32,8 @@ class TambahTugasActivity : AppCompatActivity() {
         oldId = intent.getLongExtra("tugasId", -1L)
         if (oldId == -1L) oldId = null
 
+        val isEditMode = (oldId != null)
+
         // 🔹 JIKA EDIT → AMBIL DATA DARI STORAGE
         oldId?.let { id ->
             val tugas = Storage.getTugasById(this, id)
@@ -42,8 +46,30 @@ class TambahTugasActivity : AppCompatActivity() {
             }
         }
 
-        // DATE PICKER
+        // =========================
+        // DATE PICKER (sekali pilih saat tambah baru)
+        // =========================
+        etTanggal.inputType = 0
+        etTanggal.isFocusable = false
+
+        // kalau tambah baru dan sudah ada tanggal, lock
+        if (!isEditMode && etTanggal.text.isNotBlank()) {
+            lockTanggal(etTanggal, bolehUbah = false)
+        }
+
         etTanggal.setOnClickListener {
+
+            // tambah baru: kalau sudah ada tanggal, tidak boleh ganti
+            if (!isEditMode && etTanggal.text.isNotBlank()) {
+                Toast.makeText(
+                    this,
+                    "Tanggal sudah dipilih. Kalau mau ganti, edit tugasnya.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                lockTanggal(etTanggal, bolehUbah = false)
+                return@setOnClickListener
+            }
+
             val calendar = Calendar.getInstance()
             DatePickerDialog(
                 this,
@@ -51,9 +77,12 @@ class TambahTugasActivity : AppCompatActivity() {
                     val selectedDate = Calendar.getInstance().apply {
                         set(year, month, day)
                     }
-                    val formatter =
-                        SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
-                    etTanggal.setText(formatter.format(selectedDate.time))
+                    etTanggal.setText(sdfTanggal.format(selectedDate.time))
+
+                    // tambah baru: setelah pilih tanggal, lock biar gak bisa ubah
+                    if (!isEditMode) {
+                        lockTanggal(etTanggal, bolehUbah = false)
+                    }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -61,7 +90,9 @@ class TambahTugasActivity : AppCompatActivity() {
             ).show()
         }
 
-        // SAVE
+        // =========================
+        // SAVE / UPDATE
+        // =========================
         btnSaveTugas.setOnClickListener {
 
             val nama = etNamaTugas.text.toString().trim()
@@ -97,9 +128,22 @@ class TambahTugasActivity : AppCompatActivity() {
                 Storage.saveTugasObj(this, tugasBaru)
                 Toast.makeText(this, "Tugas disimpan!", Toast.LENGTH_SHORT).show()
             }
-            val result = Intent()
-            setResult(RESULT_OK, result)
+
+            setResult(RESULT_OK, Intent())
             finish()
+        }
+    }
+
+    // helper lock tanggal
+    private fun lockTanggal(et: EditText, bolehUbah: Boolean) {
+        if (bolehUbah) {
+            et.isEnabled = true
+            et.isClickable = true
+            et.alpha = 1f
+        } else {
+            et.isEnabled = false
+            et.isClickable = false
+            et.alpha = 0.6f
         }
     }
 }

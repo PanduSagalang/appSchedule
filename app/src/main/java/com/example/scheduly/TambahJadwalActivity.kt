@@ -33,8 +33,13 @@ class TambahJadwalActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener { finish() }
 
+        // =========================
+        // MODE EDIT (jika ada editData)
+        // =========================
         oldData = intent.getStringExtra("editData")
-        if (oldData != null) {
+        val isEditMode = (oldData != null)
+
+        if (isEditMode) {
             val split = oldData!!.split("#")
             if (split.size >= 7) {
                 oldId = split[0].toLong()
@@ -48,10 +53,30 @@ class TambahJadwalActivity : AppCompatActivity() {
             btnSave.text = "Update"
         }
 
-
+        // =========================
+        // DATE PICKER (sekali pilih saat tambah baru)
+        // =========================
         etHari.inputType = 0
         etHari.isFocusable = false
+
+        // kalau tambah baru & sudah ada tanggal (misal dari restore), lock
+        if (!isEditMode && etHari.text.isNotBlank()) {
+            lockTanggal(etHari, bolehUbah = false)
+        }
+
         etHari.setOnClickListener {
+
+            // tambah baru: kalau sudah ada tanggal, tidak boleh ganti
+            if (!isEditMode && etHari.text.isNotBlank()) {
+                Toast.makeText(
+                    this,
+                    "Tanggal sudah dipilih. Kalau mau ganti, edit jadwalnya.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                lockTanggal(etHari, bolehUbah = false)
+                return@setOnClickListener
+            }
+
             val cal = Calendar.getInstance()
             DatePickerDialog(
                 this,
@@ -59,6 +84,11 @@ class TambahJadwalActivity : AppCompatActivity() {
                     val selected = Calendar.getInstance()
                     selected.set(year, month, dayOfMonth)
                     etHari.setText(sdfTanggal.format(selected.time))
+
+                    // tambah baru: setelah pilih, langsung lock biar gak bisa ubah
+                    if (!isEditMode) {
+                        lockTanggal(etHari, bolehUbah = false)
+                    }
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
@@ -66,10 +96,15 @@ class TambahJadwalActivity : AppCompatActivity() {
             ).show()
         }
 
+        // =========================
+        // TIME PICKER
+        // =========================
         setupTimePicker(etMulai)
         setupTimePicker(etSelesai)
 
-
+        // =========================
+        // SAVE / UPDATE
+        // =========================
         btnSave.setOnClickListener {
             val namaKelas = etNamaKelas.text.toString().trim()
             val catatan = etCatatan.text.toString().trim()
@@ -86,12 +121,12 @@ class TambahJadwalActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val id = if (oldData == null) System.currentTimeMillis() else oldId
+            val id = if (!isEditMode) System.currentTimeMillis() else oldId
 
             val jadwalBaru = Jadwal(
                 id = id,
                 namaKelas = namaKelas,
-                catatan = catatan,
+                dosen = catatan, // sesuai kode kamu (catatan dipakai buat dosen)
                 hari = hari,
                 ruang = ruang,
                 jamMulai = jamMulai,
@@ -99,7 +134,7 @@ class TambahJadwalActivity : AppCompatActivity() {
                 isNotifikasiAktif = isNotif
             )
 
-            if (oldData == null) {
+            if (!isEditMode) {
                 Storage.saveJadwalObj(this, jadwalBaru)
                 Toast.makeText(this, "Jadwal disimpan!", Toast.LENGTH_SHORT).show()
             } else {
@@ -111,6 +146,24 @@ class TambahJadwalActivity : AppCompatActivity() {
         }
     }
 
+    // =========================
+    // LOCK TANGGAL helper
+    // =========================
+    private fun lockTanggal(etHari: EditText, bolehUbah: Boolean) {
+        if (bolehUbah) {
+            etHari.isEnabled = true
+            etHari.isClickable = true
+            etHari.alpha = 1f
+        } else {
+            etHari.isEnabled = false
+            etHari.isClickable = false
+            etHari.alpha = 0.6f
+        }
+    }
+
+    // =========================
+    // TIME PICKER helper (HH:mm)
+    // =========================
     private fun setupTimePicker(et: EditText) {
         et.inputType = 0
         et.isFocusable = false

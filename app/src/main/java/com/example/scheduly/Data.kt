@@ -12,7 +12,7 @@ data class Tugas(
 data class Jadwal(
     val id: Long = System.currentTimeMillis(),
     val namaKelas: String,
-    val catatan: String,
+    val dosen: String,
     val hari: String,
     val ruang: String,
     val jamMulai: String,

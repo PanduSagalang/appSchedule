@@ -108,7 +108,7 @@ object Storage {
                     val jadwal = Jadwal(
                         id = s[0].toLong(),
                         namaKelas = s[1],
-                        catatan = s[2],
+                        dosen = s[2],
                         hari = s[3],
                         ruang = s[4],
                         jamMulai = s[5],
@@ -153,7 +153,7 @@ object Storage {
     }
 
     private fun jadwalToString(j: Jadwal): String {
-        return "${j.id}#${j.namaKelas}#${j.catatan}#${j.hari}#${j.ruang}#${j.jamMulai}#${j.jamSelesai}"
+        return "${j.id}#${j.namaKelas}#${j.dosen}#${j.hari}#${j.ruang}#${j.jamMulai}#${j.jamSelesai}"
     }
 
 }
