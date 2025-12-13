@@ -33,9 +33,6 @@ class TambahJadwalActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener { finish() }
 
-        // =========================
-        // MODE EDIT (jika ada editData)
-        // =========================
         oldData = intent.getStringExtra("editData")
         val isEditMode = (oldData != null)
 
@@ -53,20 +50,15 @@ class TambahJadwalActivity : AppCompatActivity() {
             btnSave.text = "Update"
         }
 
-        // =========================
-        // DATE PICKER (sekali pilih saat tambah baru)
-        // =========================
         etHari.inputType = 0
         etHari.isFocusable = false
 
-        // kalau tambah baru & sudah ada tanggal (misal dari restore), lock
         if (!isEditMode && etHari.text.isNotBlank()) {
             lockTanggal(etHari, bolehUbah = false)
         }
 
         etHari.setOnClickListener {
 
-            // tambah baru: kalau sudah ada tanggal, tidak boleh ganti
             if (!isEditMode && etHari.text.isNotBlank()) {
                 Toast.makeText(
                     this,
@@ -85,7 +77,6 @@ class TambahJadwalActivity : AppCompatActivity() {
                     selected.set(year, month, dayOfMonth)
                     etHari.setText(sdfTanggal.format(selected.time))
 
-                    // tambah baru: setelah pilih, langsung lock biar gak bisa ubah
                     if (!isEditMode) {
                         lockTanggal(etHari, bolehUbah = false)
                     }
@@ -96,15 +87,9 @@ class TambahJadwalActivity : AppCompatActivity() {
             ).show()
         }
 
-        // =========================
-        // TIME PICKER
-        // =========================
         setupTimePicker(etMulai)
         setupTimePicker(etSelesai)
 
-        // =========================
-        // SAVE / UPDATE
-        // =========================
         btnSave.setOnClickListener {
             val namaKelas = etNamaKelas.text.toString().trim()
             val catatan = etCatatan.text.toString().trim()
@@ -126,7 +111,7 @@ class TambahJadwalActivity : AppCompatActivity() {
             val jadwalBaru = Jadwal(
                 id = id,
                 namaKelas = namaKelas,
-                dosen = catatan, // sesuai kode kamu (catatan dipakai buat dosen)
+                dosen = catatan,
                 hari = hari,
                 ruang = ruang,
                 jamMulai = jamMulai,
@@ -146,9 +131,6 @@ class TambahJadwalActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
-    // LOCK TANGGAL helper
-    // =========================
     private fun lockTanggal(etHari: EditText, bolehUbah: Boolean) {
         if (bolehUbah) {
             etHari.isEnabled = true
@@ -161,9 +143,6 @@ class TambahJadwalActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
-    // TIME PICKER helper (HH:mm)
-    // =========================
     private fun setupTimePicker(et: EditText) {
         et.inputType = 0
         et.isFocusable = false

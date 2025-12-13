@@ -45,7 +45,6 @@ class JadwalAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    // 🔥 Penting buat refresh data
     fun submitData(newList: List<Jadwal>) {
         list.clear()
         list.addAll(newList)

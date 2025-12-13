@@ -28,13 +28,11 @@ class TambahTugasActivity : AppCompatActivity() {
 
         btnClose.setOnClickListener { finish() }
 
-        // 🔹 AMBIL ID JIKA MODE EDIT
         oldId = intent.getLongExtra("tugasId", -1L)
         if (oldId == -1L) oldId = null
 
         val isEditMode = (oldId != null)
 
-        // 🔹 JIKA EDIT → AMBIL DATA DARI STORAGE
         oldId?.let { id ->
             val tugas = Storage.getTugasById(this, id)
             if (tugas != null) {
@@ -46,20 +44,15 @@ class TambahTugasActivity : AppCompatActivity() {
             }
         }
 
-        // =========================
-        // DATE PICKER (sekali pilih saat tambah baru)
-        // =========================
         etTanggal.inputType = 0
         etTanggal.isFocusable = false
 
-        // kalau tambah baru dan sudah ada tanggal, lock
         if (!isEditMode && etTanggal.text.isNotBlank()) {
             lockTanggal(etTanggal, bolehUbah = false)
         }
 
         etTanggal.setOnClickListener {
 
-            // tambah baru: kalau sudah ada tanggal, tidak boleh ganti
             if (!isEditMode && etTanggal.text.isNotBlank()) {
                 Toast.makeText(
                     this,
@@ -90,9 +83,6 @@ class TambahTugasActivity : AppCompatActivity() {
             ).show()
         }
 
-        // =========================
-        // SAVE / UPDATE
-        // =========================
         btnSaveTugas.setOnClickListener {
 
             val nama = etNamaTugas.text.toString().trim()
@@ -134,7 +124,6 @@ class TambahTugasActivity : AppCompatActivity() {
         }
     }
 
-    // helper lock tanggal
     private fun lockTanggal(et: EditText, bolehUbah: Boolean) {
         if (bolehUbah) {
             et.isEnabled = true
