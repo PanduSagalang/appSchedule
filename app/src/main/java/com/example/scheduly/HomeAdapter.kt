@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 class JadwalAdapter(
     private val list: MutableList<Jadwal>,
-    private val rawById: Map<Long, String>,
+    private var rawById: Map<Long, String>,
     private val onDelete: (Long) -> Unit,
     private val onEdit: (String?) -> Unit
 ) : RecyclerView.Adapter<JadwalAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNamaKelas: TextView = view.findViewById(R.id.tvNamaKelas)
+        val tvTanggal: TextView = view.findViewById(R.id.tvTanggal)
         val tvDetail: TextView = view.findViewById(R.id.tvDetail)
         val tvCatatan: TextView = view.findViewById(R.id.tvCatatan)
         val btnHapus: TextView = view.findViewById(R.id.btnHapusJadwal)
@@ -30,6 +31,7 @@ class JadwalAdapter(
         val jadwal = list[position]
 
         holder.tvNamaKelas.text = jadwal.namaKelas
+        holder.tvTanggal.text = jadwal.hari
         holder.tvDetail.text =
             "Ruang ${jadwal.ruang}, ${jadwal.jamMulai}–${jadwal.jamSelesai}"
         holder.tvCatatan.text = "Dosen : ${jadwal.dosen}"
@@ -49,5 +51,9 @@ class JadwalAdapter(
         list.clear()
         list.addAll(newList)
         notifyDataSetChanged()
+    }
+
+    fun updateRawMap(newMap: Map<Long, String>) {
+        rawById = newMap
     }
 }

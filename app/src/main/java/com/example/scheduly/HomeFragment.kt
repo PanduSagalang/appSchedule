@@ -45,30 +45,30 @@ class HomeFragment : Fragment() {
 
         adapterHariIni = JadwalAdapter(
             mutableListOf(),
-            rawById = emptyMap(),
-            onDelete = {
-                Storage.deleteJadwalObj(requireContext(), it)
+            emptyMap(),
+            onDelete = { id ->
+                Storage.deleteJadwalObj(requireContext(), id)
                 loadJadwal()
             },
-            onEdit = {
+            onEdit = { raw ->
                 startActivity(
                     Intent(requireContext(), TambahJadwalActivity::class.java)
-                        .putExtra("editData", it)
+                        .putExtra("editData", raw)
                 )
             }
         )
 
         adapterNext = JadwalAdapter(
             mutableListOf(),
-            rawById = emptyMap(),
-            onDelete = {
-                Storage.deleteJadwalObj(requireContext(), it)
+            emptyMap(),
+            onDelete = { id ->
+                Storage.deleteJadwalObj(requireContext(), id)
                 loadJadwal()
             },
-            onEdit = {
+            onEdit = { raw ->
                 startActivity(
                     Intent(requireContext(), TambahJadwalActivity::class.java)
-                        .putExtra("editData", it)
+                        .putExtra("editData", raw)
                 )
             }
         )
@@ -95,8 +95,7 @@ class HomeFragment : Fragment() {
 
         val rawById = mutableMapOf<Long, String>()
         listRaw.forEach { raw ->
-            val sp = raw.split("#")
-            sp.firstOrNull()?.toLongOrNull()?.let { id ->
+            raw.split("#").firstOrNull()?.toLongOrNull()?.let { id ->
                 rawById[id] = raw
             }
         }
@@ -106,57 +105,26 @@ class HomeFragment : Fragment() {
         val hariIniList = mutableListOf<Jadwal>()
         val nextList = mutableListOf<Jadwal>()
 
-        listObj.forEach { j ->
-            val d = parseDate(j.hari) ?: return@forEach
-            if (isSameDay(d, today)) hariIniList.add(j)
-            else if (d.after(today)) nextList.add(j)
+        listObj.forEach { jadwal ->
+            val d = parseDate(jadwal.hari) ?: return@forEach
+            when {
+                isSameDay(d, today) -> hariIniList.add(jadwal)
+                d.after(today) -> nextList.add(jadwal)
+            }
         }
 
         hariIniList.sortBy { it.jamMulai }
         nextList.sortBy { it.jamMulai }
 
-        // update data ke adapter
-        adapterHariIni = JadwalAdapter(
-            hariIniList.toMutableList(),
-            rawById,
-            onDelete = {
-                Storage.deleteJadwalObj(requireContext(), it)
-                loadJadwal()
-            },
-            onEdit = {
-                startActivity(
-                    Intent(requireContext(), TambahJadwalActivity::class.java)
-                        .putExtra("editData", it)
-                )
-            }
-        )
+        adapterHariIni.updateRawMap(rawById)
+        adapterNext.updateRawMap(rawById)
 
-        adapterNext = JadwalAdapter(
-            nextList.toMutableList(),
-            rawById,
-            onDelete = {
-                Storage.deleteJadwalObj(requireContext(), it)
-                loadJadwal()
-            },
-            onEdit = {
-                startActivity(
-                    Intent(requireContext(), TambahJadwalActivity::class.java)
-                        .putExtra("editData", it)
-                )
-            }
-        )
-
-        rvHariIni.adapter = adapterHariIni
-        rvNext.adapter = adapterNext
+        adapterHariIni.submitData(hariIniList)
+        adapterNext.submitData(nextList)
     }
 
-    private fun parseDate(text: String): Date? {
-        return try {
-            sdfFull.parse(text)
-        } catch (e: Exception) {
-            null
-        }
-    }
+    private fun parseDate(text: String): Date? =
+        try { sdfFull.parse(text) } catch (e: Exception) { null }
 
     private fun isSameDay(d1: Date, d2: Date): Boolean {
         val c1 = Calendar.getInstance().apply { time = d1 }

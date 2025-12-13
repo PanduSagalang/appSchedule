@@ -108,7 +108,6 @@
         app:layout_constraintTop_toBottomOf="@id/cardHariIni"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- RV NEXT -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNext"
         android:layout_width="0dp"

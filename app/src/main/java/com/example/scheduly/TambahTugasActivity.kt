@@ -44,26 +44,16 @@ class TambahTugasActivity : AppCompatActivity() {
             }
         }
 
-        etTanggal.inputType = 0
-        etTanggal.isFocusable = false
-
-        if (!isEditMode && etTanggal.text.isNotBlank()) {
-            lockTanggal(etTanggal, bolehUbah = false)
-        }
 
         etTanggal.setOnClickListener {
+            val calendar = Calendar.getInstance()
 
-            if (!isEditMode && etTanggal.text.isNotBlank()) {
-                Toast.makeText(
-                    this,
-                    "Tanggal sudah dipilih. Kalau mau ganti, edit tugasnya.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                lockTanggal(etTanggal, bolehUbah = false)
-                return@setOnClickListener
+            if (etTanggal.text.isNotBlank()) {
+                try {
+                    calendar.time = sdfTanggal.parse(etTanggal.text.toString())!!
+                } catch (_: Exception) {}
             }
 
-            val calendar = Calendar.getInstance()
             DatePickerDialog(
                 this,
                 { _, year, month, day ->
@@ -72,10 +62,6 @@ class TambahTugasActivity : AppCompatActivity() {
                     }
                     etTanggal.setText(sdfTanggal.format(selectedDate.time))
 
-                    // tambah baru: setelah pilih tanggal, lock biar gak bisa ubah
-                    if (!isEditMode) {
-                        lockTanggal(etTanggal, bolehUbah = false)
-                    }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -95,7 +81,7 @@ class TambahTugasActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (oldId != null) {
+            if (isEditMode) {
                 val tugasUpdate = Tugas(
                     id = oldId!!,
                     namaTugas = nama,
@@ -121,18 +107,6 @@ class TambahTugasActivity : AppCompatActivity() {
 
             setResult(RESULT_OK, Intent())
             finish()
-        }
-    }
-
-    private fun lockTanggal(et: EditText, bolehUbah: Boolean) {
-        if (bolehUbah) {
-            et.isEnabled = true
-            et.isClickable = true
-            et.alpha = 1f
-        } else {
-            et.isEnabled = false
-            et.isClickable = false
-            et.alpha = 0.6f
         }
     }
 }

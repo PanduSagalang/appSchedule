@@ -53,33 +53,21 @@ class TambahJadwalActivity : AppCompatActivity() {
         etHari.inputType = 0
         etHari.isFocusable = false
 
-        if (!isEditMode && etHari.text.isNotBlank()) {
-            lockTanggal(etHari, bolehUbah = false)
-        }
-
         etHari.setOnClickListener {
+            val cal = Calendar.getInstance()
 
-            if (!isEditMode && etHari.text.isNotBlank()) {
-                Toast.makeText(
-                    this,
-                    "Tanggal sudah dipilih. Kalau mau ganti, edit jadwalnya.",
-                    Toast.LENGTH_SHORT
-                ).show()
-                lockTanggal(etHari, bolehUbah = false)
-                return@setOnClickListener
+            if (etHari.text.isNotBlank()) {
+                try {
+                    cal.time = sdfTanggal.parse(etHari.text.toString())!!
+                } catch (_: Exception) {}
             }
 
-            val cal = Calendar.getInstance()
             DatePickerDialog(
                 this,
-                { _, year, month, dayOfMonth ->
+                { _, year, month, day ->
                     val selected = Calendar.getInstance()
-                    selected.set(year, month, dayOfMonth)
+                    selected.set(year, month, day)
                     etHari.setText(sdfTanggal.format(selected.time))
-
-                    if (!isEditMode) {
-                        lockTanggal(etHari, bolehUbah = false)
-                    }
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
@@ -131,23 +119,19 @@ class TambahJadwalActivity : AppCompatActivity() {
         }
     }
 
-    private fun lockTanggal(etHari: EditText, bolehUbah: Boolean) {
-        if (bolehUbah) {
-            etHari.isEnabled = true
-            etHari.isClickable = true
-            etHari.alpha = 1f
-        } else {
-            etHari.isEnabled = false
-            etHari.isClickable = false
-            etHari.alpha = 0.6f
-        }
-    }
-
     private fun setupTimePicker(et: EditText) {
         et.inputType = 0
         et.isFocusable = false
+
         et.setOnClickListener {
             val cal = Calendar.getInstance()
+
+            if (et.text.isNotBlank()) {
+                val split = et.text.toString().split(":")
+                cal.set(Calendar.HOUR_OF_DAY, split[0].toInt())
+                cal.set(Calendar.MINUTE, split[1].toInt())
+            }
+
             TimePickerDialog(
                 this,
                 { _, hour, minute ->

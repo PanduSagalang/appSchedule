@@ -81,7 +81,7 @@ class TugasFragment : Fragment() {
     }
 
     private fun loadTugas() {
-        if (!isAdded) return   // 🔒 safety
+        if (!isAdded) return
         val list = Storage.getTugasList(requireContext())
         adapter.submitData(list)
     }
